@@ -11,6 +11,13 @@ def index(request):
     })
 
 """ Display the entry page """
+def generate_entry(request, entry):
+    content = util.get_entry(entry)
+    return render(request, "encyclopedia/entry.html", {
+        "title": entry,
+        "md": markdown2.markdown(content)
+    })
+
 def entry(request):
     if request.method == "POST":
         entry = request.POST["q"]
@@ -23,6 +30,6 @@ def entry(request):
             })
         else:
             return HttpResponse("404 Not Found!")
-            
+
     else:
         return index(request)
