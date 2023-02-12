@@ -35,3 +35,20 @@ def get_entry(title):
         return f.read().decode("utf-8")
     except FileNotFoundError:
         return None
+
+
+def substr_contained(s, substr):
+    """
+    Check if the string s contain the substr
+    """
+    if len(s) < len(substr): return False
+    i, j = 0, 0
+    while i < len(s):
+        if s[i] == substr[j]:
+            j += 1
+        else:
+            j = 0
+        
+        if j >= len(substr): return True
+        i += 1 
+    return False
