@@ -104,3 +104,14 @@ def edit_page(request, entry):
         "form": forms.EditForm(initial=initial_dict),
         "title": entry
     })
+
+
+""" Request to a random entry """
+def random_page(request):
+    import random
+
+    # Get the entry list and a random index
+    entries_list = util.list_entries()
+    index = random.randint(0, len(entries_list)-1)
+
+    return redirect("wiki/"+entries_list[index])
