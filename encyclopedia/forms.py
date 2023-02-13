@@ -6,4 +6,7 @@ class MarkdownForm(forms.Form):
 
 
 class EditForm(forms.Form):
-    content = forms.CharField(widget=forms.Textarea(attrs={"name":"Content"}))
+    content = forms.CharField(widget=forms.Textarea(attrs={
+        "name":"Content",
+        "style": "display: flex;"
+    }))
