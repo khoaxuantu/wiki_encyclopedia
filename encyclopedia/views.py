@@ -81,3 +81,26 @@ def create_page(request):
     return render(request, "encyclopedia/newpage.html", {
         "form": forms.MarkdownForm()
     })
+
+
+""" Edit a page """
+def edit_page(request, entry):
+    initial_dict = {}
+    initial_dict["content"] = util.get_entry(entry)
+
+    if request.method == "POST":
+        text = forms.EditForm(request.POST)
+
+        if text.is_valid():
+            content = text.cleaned_data["content"]
+            util.save_entry(entry, content)
+            return redirect("../wiki/"+entry)
+        else:
+            return render(request, "encyclopedia/editpage.html", {
+                "form": text
+            })
+
+    return render(request, "encyclopedia/editpage.html", {
+        "form": forms.EditForm(initial=initial_dict),
+        "title": entry
+    })

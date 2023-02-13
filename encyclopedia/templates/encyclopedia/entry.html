@@ -7,3 +7,9 @@
 {% block body %}
     {{ md | safe }}
 {% endblock body %}
+
+{% block nav %}
+    <div>
+        <a href="/editpage/{{ title }}">Edit Page</a>
+    </div>
+{% endblock nav %}
