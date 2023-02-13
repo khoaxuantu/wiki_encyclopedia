@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 
-from . import util
+from . import util, forms
 import markdown2
 
 
@@ -47,8 +47,29 @@ def entry(request):
             return render(request, "encyclopedia/index.html", {
                 "entries": render_list,
                 "h1tag": "\'"+entry+"\' is not found. Here are the list of keywords\
-                that contain the entry:"
+                that contain the entry:<br>"
             })
 
     else:
         return index(request)
+
+
+""" Create a new page """
+def create_page(request):
+    if request.method == "POST":
+        text = forms.MarkdownForm(request.POST)
+        # print(text.cleaned_data)
+
+        if text.is_valid():
+            title = text.cleaned_data["title"]
+            content = text.cleaned_data["content"]
+            util.save_entry(title, content)
+            return redirect("wiki/"+title)
+        else:
+            return render(request, "encyclopedia/newpage.html", {
+                "form": text
+            })
+        
+    return render(request, "encyclopedia/newpage.html", {
+        "form": forms.MarkdownForm()
+    })
