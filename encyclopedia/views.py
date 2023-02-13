@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
+from django.contrib import messages
 
 from . import util, forms
 import markdown2
@@ -62,6 +63,13 @@ def create_page(request):
 
         if text.is_valid():
             title = text.cleaned_data["title"]
+
+            if util.get_entry(title) is not None:
+                messages.error(request, "The \'"+title+"\' title exists, please choose another title.")
+                return render(request, "encyclopedia/newpage.html", {
+                    "form": text
+                })
+
             content = text.cleaned_data["content"]
             util.save_entry(title, content)
             return redirect("wiki/"+title)
