@@ -18,3 +18,13 @@ A Wikipedia-like online encyclopedia
 ## Tools
 - [Django](https://www.djangoproject.com/)
 - [Bootstrap](https://getbootstrap.com/)
+
+## Prerequisite
+- Python 3.10
+- Django 4.1.6
+- Markdown2 2.4.7
+
+## Run (local)
+```bash
+python3 manage.py runserver
+```
